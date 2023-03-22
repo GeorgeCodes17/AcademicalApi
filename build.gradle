@@ -1,0 +1,20 @@
+plugins {
+    id "application"
+}
+
+application {
+    mainClass.set("com.SchoolioApi.Main")
+}
+
+dependencies {
+    implementation 'com.sparkjava:spark-core:2.9.4'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.okta.jwt:okta-jwt-verifier:0.5.7'
+    implementation 'com.okta.jwt:okta-jwt-verifier-impl:0.5.7'
+    implementation 'org.slf4j:slf4j-simple:2.0.5'
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.9'
+}
+
+repositories {
+    mavenCentral()
+}

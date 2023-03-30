@@ -22,6 +22,7 @@ public class TokenFromCreds implements Route {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        response.status(httpResponse.getStatusLine().getStatusCode());
         return EntityUtils.toString(httpResponse.getEntity());
     }
 }

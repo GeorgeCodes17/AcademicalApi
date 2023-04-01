@@ -1,6 +1,7 @@
 package com.SchoolioApi.auth;
 
 import com.okta.jwt.JwtVerificationException;
+import org.apache.http.HttpStatus;
 import spark.Filter;
 import spark.Request;
 import spark.Response;
@@ -10,7 +11,7 @@ import java.util.List;
 import static spark.Spark.halt;
 
 public class AuthenticationFilter implements Filter {
-    private static final List<String> IGNORE_ENDPOINTS = List.of(
+    private final List<String> IGNORE_ENDPOINTS = List.of(
             "/register",
             "/get-bearer-by-creds",
             "/get-bearer-by-refresh"
@@ -27,7 +28,7 @@ public class AuthenticationFilter implements Filter {
         try {
             ValidateAccessToken.isValid(accessToken);
         } catch (JwtVerificationException e) {
-            halt(401, e.getMessage());
+            halt(HttpStatus.SC_UNAUTHORIZED, e.getMessage());
         }
     }
 }

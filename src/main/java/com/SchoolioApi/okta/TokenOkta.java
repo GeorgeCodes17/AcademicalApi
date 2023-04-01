@@ -1,5 +1,6 @@
-package com.SchoolioApi.oauth;
+package com.SchoolioApi.okta;
 
+import com.SchoolioApi.objects.Account;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -18,14 +19,14 @@ import java.util.Properties;
 
 import static com.SchoolioApi.helpers.ConfigFile.config;
 
-public class Token {
+public class TokenOkta {
     private static final Properties config = config();
     private static final String AUTH_URL = config.getProperty("AUTH_URL");
     private static final String AUTH_USER_CREDS_HEADER = config.getProperty("AUTH_USER_CREDS_HEADER");
     private static final String CLIENT_ID = config.getProperty("CLIENT_ID");
     private static final String CLIENT_SECRET = config.getProperty("CLIENT_SECRET");
 
-    public static HttpResponse getToken(String username, String password) throws IOException {
+    public static HttpResponse getToken(Account account) throws IOException {
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost request = new HttpPost(AUTH_URL + "/oauth2/default/v1/token");
         request.setHeader("Authorization", AUTH_USER_CREDS_HEADER);
@@ -33,8 +34,8 @@ public class Token {
 
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("grant_type", "password"));
-        params.add(new BasicNameValuePair("username", username));
-        params.add(new BasicNameValuePair("password", password));
+        params.add(new BasicNameValuePair("username", account.username()));
+        params.add(new BasicNameValuePair("password", account.password()));
         params.add(new BasicNameValuePair("scope", "openid profile email offline_access"));
 
         request.setEntity(new UrlEncodedFormEntity(params));

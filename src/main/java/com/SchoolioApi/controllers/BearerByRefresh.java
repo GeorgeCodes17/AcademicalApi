@@ -8,9 +8,9 @@ import spark.Route;
 
 import java.io.IOException;
 
-import static com.SchoolioApi.oauth.Token.getToken;
+import static com.SchoolioApi.okta.TokenOkta.getToken;
 
-public class TokenFromRefresh implements Route {
+public class BearerByRefresh implements Route {
     @Override
     public Object handle(Request request, Response response) throws IOException {
         String refreshToken = request.headers("Authorization");

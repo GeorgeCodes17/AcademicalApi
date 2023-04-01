@@ -7,11 +7,11 @@ import com.okta.jwt.JwtVerifiers;
 import static com.SchoolioApi.helpers.ConfigFile.config;
 
 public class ValidateAccessToken {
-    private static final String AUTH_URL = config().getProperty("AUTH_URL");
+    private static final String authUrl = config().getProperty("AUTH_URL");
 
     public static void isValid(String accessToken) throws JwtVerificationException {
         AccessTokenVerifier jwtVerifier = JwtVerifiers.accessTokenVerifierBuilder()
-                .setIssuer(AUTH_URL + "/oauth2/default")
+                .setIssuer(authUrl + "/oauth2/default")
                 .build();
 
         jwtVerifier.decode(accessToken);

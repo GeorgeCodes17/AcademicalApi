@@ -1,29 +1,25 @@
 package com.SchoolioApi.controllers;
 
-import com.SchoolioApi.helpers.JsonTransformer;
-import com.SchoolioApi.oauth.Token;
+import com.SchoolioApi.helpers.JsonConverter;
+import com.SchoolioApi.helpers.UrlEncodedConverter;
+import com.SchoolioApi.okta.RegisterOkta;
+import com.SchoolioApi.okta.TokenOkta;
 import com.SchoolioApi.objects.Account;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.util.EntityUtils;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 
-import static com.SchoolioApi.oauth.Register.assignUserToApp;
-import static com.SchoolioApi.oauth.Register.registerUserToAuthProvider;
-
 public class Register implements Route {
-
-    Map<String, String> accountMap = new HashMap<>();
+    private final UrlEncodedConverter urlEncodedConverter = new UrlEncodedConverter();
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        convertUrlEncodedToMap(request.body());
+        Map<String,String> accountMap = urlEncodedConverter.convert(request.body());
         Account account = new Account(
                 accountMap.get("username"),
                 accountMap.get("password"),
@@ -31,37 +27,26 @@ public class Register implements Route {
                 accountMap.get("last_name")
         );
 
-        HttpResponse registerResponse = registerUserToAuthProvider(account);
+        HttpResponse registerResponse = RegisterOkta.registerUserToAuthProvider(account);
         int registerStatus = registerResponse.getStatusLine().getStatusCode();
-        if (registerStatus != 200) {
+        if (registerStatus != HttpStatus.SC_OK) {
             response.status(registerStatus);
             return EntityUtils.toString(registerResponse.getEntity());
         }
 
         String payload = EntityUtils.toString(registerResponse.getEntity());
-        String userId = new JsonTransformer().render(payload).get("id").toString();
+        String userId = new JsonConverter().render(payload).get("id").toString();
 
-        HttpResponse assignResponse = assignUserToApp(userId);
+        HttpResponse assignResponse = RegisterOkta.assignUserToApp(userId);
         int assignStatus = assignResponse.getStatusLine().getStatusCode();
-        if (assignStatus != 200) {
+        if (assignStatus != HttpStatus.SC_OK) {
             response.status(assignStatus);
             return EntityUtils.toString(registerResponse.getEntity());
         }
 
-        HttpResponse getTokenResponse = Token.getToken(account.username(), account.password());
+        HttpResponse getTokenResponse = TokenOkta.getToken(account);
         int getTokenStatus = getTokenResponse.getStatusLine().getStatusCode();
         response.status(getTokenStatus);
         return EntityUtils.toString(getTokenResponse.getEntity());
-    }
-
-    private void convertUrlEncodedToMap(String urlEncoded) {
-        String encodedParams;
-        encodedParams = URLDecoder.decode(urlEncoded, StandardCharsets.UTF_8);
-
-        String[] params = encodedParams.split("&");
-        for (String param : params) {
-            String[] keyValue = param.split("=");
-            accountMap.put(keyValue[0], keyValue[1]);
-        }
     }
 }

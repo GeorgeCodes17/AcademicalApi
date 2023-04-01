@@ -1,4 +1,4 @@
-package com.SchoolioApi.oauth;
+package com.SchoolioApi.okta;
 
 import com.SchoolioApi.objects.Account;
 import org.apache.http.HttpResponse;
@@ -13,7 +13,7 @@ import java.util.Properties;
 import static com.SchoolioApi.helpers.ConfigFile.config;
 
 
-public class Register {
+public class RegisterOkta {
     private static final Properties config = config();
     private static final String AUTH_URL = config.getProperty("AUTH_URL");
     private static final String AUTH_TOKEN = config.getProperty("AUTH_TOKEN");

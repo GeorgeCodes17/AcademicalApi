@@ -4,7 +4,7 @@ import com.SchoolioApi.Database;
 import spark.Request;
 import spark.Response;
 
-public class Timetable {
+public class LessonSchedule {
     private static final Database database;
 
     static {

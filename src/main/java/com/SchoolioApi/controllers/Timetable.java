@@ -26,17 +26,26 @@ public class Timetable {
                 """
                     SELECT JSON_ARRAYAGG(
                         JSON_OBJECT(
-                            '__pk', __pk,
-                            'teacher', teacher,
-                            'assigned_by', assigned_by,
-                            '_fk_lesson', _fk_lesson,
-                            'day_of_week', day_of_week,
-                            'start', start,
-                            'end', end,
-                            'created_at', created_at,
-                            'updated_at', updated_at
+                            'id', ls.__pk,
+                            'lesson', JSON_OBJECT(
+                                'id', l.__pk,
+                                'name', l.name
+                            ),
+                            'year', JSON_OBJECT(
+                                'id', y.__pk,
+                                'name', y.year
+                            ),
+                            'day_of_week', ls.day_of_week,
+                            'start', ls.start,
+                            'end', ls.end,
+                            'assigned_by', ls.assigned_by,
+                            'created_at', ls.created_at,
+                            'updated_at', ls.updated_at
                         )
-                    ) FROM timetable WHERE teacher = '%s'
+                    ) FROM lesson_schedule as ls
+                    INNER JOIN lesson as l ON ls._fk_lesson = l.__pk
+                    INNER JOIN year as y ON l._fk_year = y.__pk
+                    WHERE teacher = '%s'
                 """,
                 subId
             );

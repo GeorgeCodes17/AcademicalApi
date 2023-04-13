@@ -14,8 +14,13 @@ dependencies {
     implementation 'org.slf4j:slf4j-simple:2.0.5'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.9'
     implementation 'com.mysql:mysql-connector-j:8.0.32'
+    implementation 'com.zaxxer:HikariCP:5.0.1'
 }
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://repo.clojars.org'
+        name 'Clojars'
+    }
 }

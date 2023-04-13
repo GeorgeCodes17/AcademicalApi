@@ -15,6 +15,7 @@ import spark.Route;
 import java.util.Map;
 
 public class Register implements Route {
+    private final JsonConverter jsonConverter = new JsonConverter();
     private final UrlEncodedConverter urlEncodedConverter = new UrlEncodedConverter();
 
     @Override
@@ -35,7 +36,7 @@ public class Register implements Route {
         }
 
         String payload = EntityUtils.toString(registerResponse.getEntity());
-        String userId = new JsonConverter().render(payload).get("id").toString();
+        String userId = jsonConverter.toHashmap(payload).get("id").toString();
 
         HttpResponse assignResponse = RegisterOkta.assignUserToApp(userId);
         int assignStatus = assignResponse.getStatusLine().getStatusCode();

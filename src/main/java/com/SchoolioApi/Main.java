@@ -14,7 +14,7 @@ public class Main {
 
         path("/secured", () -> {
             post("/authenticate", (req, res) -> "true");
-            get("/lesson-schedule/get/:sub", LessonSchedule::index);
+            get("/lesson-schedule/get", LessonSchedule::index);
         });
         post("/get-bearer-by-creds", new BearerByCreds());
         post("/get-bearer-by-refresh", new BearerByRefresh());

@@ -12,7 +12,7 @@ public class LessonSchedule {
 
     public static String index(Request request, Response response) {
         try {
-            LessonScheduleSource lessonScheduleSource = new LessonScheduleSource(request.params("sub"));
+            LessonScheduleSource lessonScheduleSource = new LessonScheduleSource(request.headers("SubId"));
             return jsonConverter.toJson(lessonScheduleSource.index());
         } catch (SQLException e) {
             response.status(500);

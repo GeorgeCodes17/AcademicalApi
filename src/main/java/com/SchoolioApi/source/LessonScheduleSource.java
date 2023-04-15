@@ -1,6 +1,7 @@
 package com.SchoolioApi.source;
 
 import com.SchoolioApi.DataSource;
+import com.SchoolioApi.helpers.JsonConverter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,13 +10,14 @@ import java.sql.SQLException;
 
 public class LessonScheduleSource {
     private final String sub;
-    private final Connection con = DataSource.getConnection();
+
+    private static final JsonConverter JSON_CONVERTER = new JsonConverter();
 
     public LessonScheduleSource(String sub) throws SQLException {
         this.sub = sub;
     }
 
-    public ResultSet index() throws SQLException {
+    public String index() throws SQLException {
         String qry = """
             SELECT JSON_ARRAYAGG(
                 JSON_OBJECT(
@@ -41,8 +43,12 @@ public class LessonScheduleSource {
             WHERE teacher = ?
         """;
 
+        Connection con = DataSource.getConnection();
         PreparedStatement stmt = con.prepareStatement(qry);
         stmt.setString(1, sub);
-        return stmt.executeQuery();
+        String jsonResult = JSON_CONVERTER.toJson(stmt.executeQuery());
+        con.close();
+
+        return jsonResult;
     }
 }

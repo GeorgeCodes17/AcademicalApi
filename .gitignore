@@ -43,3 +43,4 @@ bin/
 .DS_Store
 config.properties
 /gradle/wrapper/gradle-wrapper.jar
+logs

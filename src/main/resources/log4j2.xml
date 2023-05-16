@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <File name="LogAllAppender" fileName="logs/all.log">
+            <PatternLayout>
+                <Pattern>[%-5p] %d %c - %m%n</Pattern>
+            </PatternLayout>
+        </File>
+        <File name="DebugAppender" fileName="logs/debug.log">
+            <PatternLayout>
+                <Pattern>[%-5p] %d %c - %m%n</Pattern>
+            </PatternLayout>
+        </File>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%p] %c %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="ALL" additivity="false">
+            <AppenderRef ref="LogAllAppender"/>
+        </Root>
+        <Logger name="DebugLogger" level="DEBUG" additivity="false">
+            <AppenderRef ref="DebugAppender"/>
+        </Logger>
+        <Logger name="ConsoleLogger" level="DEBUG" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+        </Logger>t
+    </Loggers>
+</Configuration>

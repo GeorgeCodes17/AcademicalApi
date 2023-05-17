@@ -42,4 +42,10 @@ public class Main {
         LOGGER_DEBUG.log(level, message);
         LOGGER.log(level, message);
     }
+
+    public static void logAll(Level level, String message) {
+        LOGGER_ALL_LEVELS.log(level, message);
+        LOGGER_DEBUG.log(level, message);
+        LOGGER.log(level, message);
+    }
 }

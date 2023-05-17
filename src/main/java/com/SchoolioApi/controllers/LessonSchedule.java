@@ -1,7 +1,11 @@
 package com.SchoolioApi.controllers;
 
+import com.SchoolioApi.Main;
+import com.SchoolioApi.exceptions.LessonScheduleException;
 import com.SchoolioApi.helpers.JsonConverter;
 import com.SchoolioApi.source.LessonScheduleSource;
+import org.apache.http.HttpStatus;
+import org.apache.logging.log4j.Level;
 import spark.Request;
 import spark.Response;
 
@@ -12,15 +16,17 @@ public class LessonSchedule {
 
     public static String index(Request request, Response response) {
         if (request.headers("SubId") == null || request.headers("SubId").isEmpty()) {
-            response.status(422);
+            response.status(HttpStatus.SC_UNPROCESSABLE_ENTITY);
             return "SubId is a required parameter in the request header";
         }
         try {
             LessonScheduleSource lessonScheduleSource = new LessonScheduleSource(request.headers("SubId"));
             return jsonConverter.toJson(lessonScheduleSource.index());
         } catch (SQLException e) {
-            response.status(500);
-            return e.getMessage();
+            LessonScheduleException lessonScheduleException = new LessonScheduleException("Failed to get lesson schedule by sub id", e);
+            Main.logAll(Level.WARN, lessonScheduleException);
+            response.status(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+            return lessonScheduleException.getMessage();
         }
     }
 }

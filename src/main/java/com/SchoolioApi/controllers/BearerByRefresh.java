@@ -11,6 +11,7 @@ import spark.Response;
 import spark.Route;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import static com.SchoolioApi.okta.TokenOkta.getToken;
 
@@ -22,7 +23,7 @@ public class BearerByRefresh implements Route {
         HttpResponse httpResponse;
         try {
             httpResponse = getToken(refreshToken);
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             GetBearerException getBearerException = new GetBearerException("Failed to get bearer using refresh token", e);
             Main.logAll(Level.WARN, getBearerException);
             response.status(HttpStatus.SC_INTERNAL_SERVER_ERROR);

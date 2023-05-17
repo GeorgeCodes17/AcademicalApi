@@ -61,7 +61,7 @@ public class RegisterOkta {
     public static HttpResponse assignUserToApp(String userId) throws IOException {
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost request = new HttpPost(AUTH_URL + "/api/v1/apps/" + APP_ID + "/users/" + userId);
-        System.out.println(AUTH_URL + "/api/v1/apps/" + APP_ID + "/users/" + userId);
+
         request.setHeader("Authorization", AUTH_TOKEN);
         request.setHeader("Content-Type", "application/json");
         request.setHeader("Accept", "application/json");

@@ -23,10 +23,9 @@ public class LessonSchedule {
             LessonScheduleSource lessonScheduleSource = new LessonScheduleSource(request.headers("SubId"));
             return jsonConverter.toJson(lessonScheduleSource.index());
         } catch (SQLException e) {
-            LessonScheduleException lessonScheduleException = new LessonScheduleException("Failed to get lesson schedule by sub id", e);
-            Main.logAll(Level.WARN, lessonScheduleException);
+            Main.logAll(Level.WARN, new LessonScheduleException("Failed to get lesson schedule by sub id: " + e.getMessage()));
             response.status(HttpStatus.SC_INTERNAL_SERVER_ERROR);
-            return lessonScheduleException.getMessage();
+            return e.getMessage();
         }
     }
 }

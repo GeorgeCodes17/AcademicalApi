@@ -30,6 +30,7 @@ public class Main {
             get("/lesson-schedule/get", LessonSchedule::index);
         });
         get("/year", Year::index);
+        get("/lesson", Lesson::index);
         post("/get-bearer-by-creds", new BearerByCreds());
         post("/get-bearer-by-refresh", new BearerByRefresh());
         post("/register", new Register());

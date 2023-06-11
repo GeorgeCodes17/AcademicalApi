@@ -22,11 +22,11 @@ public class LessonScheduleSource {
                     'id', ls.__pk,
                     'lesson', JSON_OBJECT(
                         'id', l.__pk,
-                        'name', l.name
-                    ),
-                    'year', JSON_OBJECT(
-                        'id', y.__pk,
-                        'name', y.year
+                        'name', l.name,
+                        'year', JSON_OBJECT(
+                            'id', y.__pk,
+                            'year', y.year
+                        )
                     ),
                     'day_of_week', ls.day_of_week,
                     'start', ls.start,

@@ -27,7 +27,8 @@ public class Main {
 
         path("/secured", () -> {
             post("/authenticate", (req, res) -> "true");
-            get("/lesson-schedule", LessonSchedule::index);
+            get("/lesson-schedule/show", LessonSchedule::index);
+            post("/lesson-schedule", LessonSchedule::store);
         });
         get("/year", Year::index);
         get("/lesson", Lesson::index);

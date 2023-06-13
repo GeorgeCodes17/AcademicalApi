@@ -6,9 +6,14 @@ import com.SchoolioApi.helpers.JsonConverter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import com.SchoolioApi.controllers.LessonSchedule;
+
+import java.sql.*;
+import java.util.HashMap;
 
 public class LessonScheduleSource {
     private final String sub;
+    private final Connection con = DataSource.getConnection();
 
     private static final JsonConverter JSON_CONVERTER = new JsonConverter();
 
@@ -23,11 +28,11 @@ public class LessonScheduleSource {
                     'id', ls.__pk,
                     'lesson', JSON_OBJECT(
                         'id', l.__pk,
-                        'name', l.name
-                    ),
-                    'year', JSON_OBJECT(
-                        'id', y.__pk,
-                        'name', y.year
+                        'name', l.name,
+                        'year', JSON_OBJECT(
+                            'id', y.__pk,
+                            'year', y.year
+                        )
                     ),
                     'day_of_week', ls.day_of_week,
                     'start', ls.start,
@@ -39,7 +44,7 @@ public class LessonScheduleSource {
             ) FROM lesson_schedule as ls
             INNER JOIN lesson as l ON ls._fk_lesson = l.__pk
             INNER JOIN year as y ON l._fk_year = y.__pk
-            WHERE teacher = ?
+            WHERE sub = ?
         """;
 
         Connection con = DataSource.getConnection();
@@ -49,5 +54,41 @@ public class LessonScheduleSource {
         con.close();
 
         return jsonResult;
+    }
+
+    public void store(String sub, HashMap<String, String> params) throws SQLException {
+        String qry = """
+            INSERT INTO lesson_schedule (
+                sub,
+                assigned_by,
+                _fk_lesson,
+                day_of_week,
+                start,
+                end
+            ) VALUES (
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?
+            )
+        """;
+
+        String assignedBy = params.get(LessonSchedule.queryParams[0]);
+        int fkLesson = Integer.parseInt(params.get(LessonSchedule.queryParams[1]));
+        String dayOfWeek = params.get(LessonSchedule.queryParams[2]);
+        Time start = Time.valueOf(params.get(LessonSchedule.queryParams[3]));
+        Time end = Time.valueOf(params.get(LessonSchedule.queryParams[4]));
+
+        PreparedStatement stmt = con.prepareStatement(qry);
+        stmt.setString(1, sub);
+        stmt.setString(2, assignedBy);
+        stmt.setInt(3, fkLesson);
+        stmt.setString(4, dayOfWeek);
+        stmt.setTime(5, start);
+        stmt.setTime(6, end);
+
+        stmt.execute();
     }
 }

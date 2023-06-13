@@ -1,12 +1,17 @@
 package com.SchoolioApi.controllers;
 
+import com.SchoolioApi.Main;
+import com.SchoolioApi.exceptions.GetBearerException;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.Level;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import static com.SchoolioApi.okta.TokenOkta.getToken;
 
@@ -18,8 +23,11 @@ public class BearerByRefresh implements Route {
         HttpResponse httpResponse;
         try {
             httpResponse = getToken(refreshToken);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | URISyntaxException e) {
+            GetBearerException getBearerException = new GetBearerException("Failed to get bearer using refresh token", e);
+            Main.logAll(Level.WARN, getBearerException);
+            response.status(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+            return getBearerException;
         }
         response.status(httpResponse.getStatusLine().getStatusCode());
         return EntityUtils.toString(httpResponse.getEntity());

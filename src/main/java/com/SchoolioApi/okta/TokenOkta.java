@@ -1,5 +1,6 @@
 package com.SchoolioApi.okta;
 
+import com.SchoolioApi.Main;
 import com.SchoolioApi.objects.Account;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -9,6 +10,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.logging.log4j.Level;
 
 import java.io.IOException;
 import java.net.URI;
@@ -42,7 +44,7 @@ public class TokenOkta {
         return client.execute(request);
     }
 
-    public static HttpResponse getToken(String refreshToken) throws IOException {
+    public static HttpResponse getToken(String refreshToken) throws IOException, URISyntaxException {
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost getAuthenticated = new HttpPost(AUTH_URL + "/oauth2/default/v1/token");
         getAuthenticated.addHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -56,7 +58,8 @@ public class TokenOkta {
                 .addParameter("refresh_token", refreshToken)
                 .build();
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            Main.logAll(Level.WARN, "Failed to process URI a getToken(String) method: " + e);
+            throw e;
         }
         getAuthenticated.setURI(uri);
 

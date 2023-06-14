@@ -23,37 +23,33 @@ public class LessonScheduleSource {
 
     public String index() throws SQLException {
         String qry = """
-            SELECT JSON_ARRAYAGG(
-                JSON_OBJECT(
-                    'id', ls.__pk,
-                    'lesson', JSON_OBJECT(
-                        'id', l.__pk,
-                        'name', l.name,
-                        'year', JSON_OBJECT(
-                            'id', y.__pk,
-                            'year', y.year
+                    SELECT JSON_ARRAYAGG(
+                        JSON_OBJECT(
+                            'id', ls.__pk,
+                            'lesson', JSON_OBJECT(
+                                'id', l.__pk,
+                                'name', l.name,
+                                'year', JSON_OBJECT(
+                                    'id', y.__pk,
+                                    'year', y.year
+                                )
+                            ),
+                            'day_of_week', ls.day_of_week,
+                            'start', ls.start,
+                            'end', ls.end,
+                            'assigned_by', ls.assigned_by,
+                            'created_at', ls.created_at,
+                            'updated_at', ls.updated_at
                         )
-                    ),
-                    'day_of_week', ls.day_of_week,
-                    'start', ls.start,
-                    'end', ls.end,
-                    'assigned_by', ls.assigned_by,
-                    'created_at', ls.created_at,
-                    'updated_at', ls.updated_at
-                )
-            ) FROM lesson_schedule as ls
-            INNER JOIN lesson as l ON ls._fk_lesson = l.__pk
-            INNER JOIN year as y ON l._fk_year = y.__pk
-            WHERE sub = ?
-        """;
+                    ) FROM lesson_schedule as ls
+                    INNER JOIN lesson as l ON ls._fk_lesson = l.__pk
+                    INNER JOIN year as y ON l._fk_year = y.__pk
+                    WHERE sub = ?
+                """;
 
-        Connection con = DataSource.getConnection();
         PreparedStatement stmt = con.prepareStatement(qry);
         stmt.setString(1, sub);
-        String jsonResult = JSON_CONVERTER.toJson(stmt.executeQuery());
-        con.close();
-
-        return jsonResult;
+        return JSON_CONVERTER.toJson(stmt.executeQuery());
     }
 
     public void store(String sub, HashMap<String, String> params) throws SQLException {

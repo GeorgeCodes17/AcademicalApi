@@ -23,7 +23,7 @@ public class LessonScheduleSource {
 
     public String index() throws SQLException {
         String qry = """
-                    SELECT JSON_ARRAYAGG(
+                    SELECT JSON_ARRAY(
                         JSON_OBJECT(
                             'id', ls.__pk,
                             'lesson', JSON_OBJECT(
@@ -45,6 +45,7 @@ public class LessonScheduleSource {
                     INNER JOIN lesson as l ON ls._fk_lesson = l.__pk
                     INNER JOIN year as y ON l._fk_year = y.__pk
                     WHERE sub = ?
+                    ORDER BY ls.start
                 """;
 
         PreparedStatement stmt = con.prepareStatement(qry);

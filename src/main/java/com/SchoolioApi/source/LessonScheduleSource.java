@@ -1,12 +1,8 @@
 package com.SchoolioApi.source;
 
 import com.SchoolioApi.DataSource;
-import com.SchoolioApi.helpers.JsonConverter;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import com.SchoolioApi.controllers.LessonSchedule;
+import com.SchoolioApi.helpers.JsonConverter;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -14,8 +10,27 @@ import java.util.HashMap;
 public class LessonScheduleSource {
     private final String sub;
     private final Connection con = DataSource.getConnection();
+    private final JsonConverter jsonConverter = new JsonConverter();
 
-    private static final JsonConverter JSON_CONVERTER = new JsonConverter();
+    private static final String LESSON_SCHEDULE_TEMPLATE = """
+        {
+            "id": %s,
+            "assigned_by": "%s",
+            "lesson": {
+                "id": %s,
+                "name": "%s",
+                "year": {
+                    "id": %s,
+                    "year": %s
+                }
+            },
+            "day_of_week": "WED",
+            "start": "%s",
+            "end": "%s",
+            "created_at": "%s",
+            "updated_at": "%s"
+        }
+    """;
 
     public LessonScheduleSource(String sub) throws SQLException {
         this.sub = sub;
@@ -23,33 +38,37 @@ public class LessonScheduleSource {
 
     public String index() throws SQLException {
         String qry = """
-                    SELECT JSON_ARRAYAGG(
-                        JSON_OBJECT(
-                            'id', ls.__pk,
-                            'lesson', JSON_OBJECT(
-                                'id', l.__pk,
-                                'name', l.name,
-                                'year', JSON_OBJECT(
-                                    'id', y.__pk,
-                                    'year', y.year
-                                )
-                            ),
-                            'day_of_week', ls.day_of_week,
-                            'start', ls.start,
-                            'end', ls.end,
-                            'assigned_by', ls.assigned_by,
-                            'created_at', ls.created_at,
-                            'updated_at', ls.updated_at
-                        )
-                    ) FROM lesson_schedule as ls
+                    SELECT
+                        ls.*,
+                        l.__pk,
+                        l.name,
+                        y.__pk,
+                        y.year
+                    FROM lesson_schedule as ls
                     INNER JOIN lesson as l ON ls._fk_lesson = l.__pk
                     INNER JOIN year as y ON l._fk_year = y.__pk
                     WHERE sub = ?
+                    ORDER BY ls.start
                 """;
 
         PreparedStatement stmt = con.prepareStatement(qry);
         stmt.setString(1, sub);
-        return JSON_CONVERTER.toJson(stmt.executeQuery());
+        ResultSet rs = stmt.executeQuery();
+
+        return jsonConverter.toJson(
+                rs,
+                LESSON_SCHEDULE_TEMPLATE,
+                rs.getString("ls.__pk"),
+                rs.getString("ls.assigned_by"),
+                rs.getString("l.__pk"),
+                rs.getString("l.name"),
+                rs.getString("y.__pk"),
+                rs.getString("y.year"),
+                rs.getString("ls.start"),
+                rs.getString("ls.end"),
+                rs.getString("ls.created_at"),
+                rs.getString("ls.updated_at")
+        );
     }
 
     public void store(String sub, HashMap<String, String> params) throws SQLException {

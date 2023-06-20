@@ -1,6 +1,8 @@
 package com.SchoolioApi.helpers;
 
+import com.SchoolioApi.Main;
 import com.google.gson.Gson;
+import org.apache.logging.log4j.Level;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -27,5 +29,25 @@ public class JsonConverter {
             }
         }
         return jsonResult.toString();
+    }
+
+    public String toJson (ResultSet rs, String template, String... args) {
+        StringBuilder response = new StringBuilder("[");
+        try {
+            while (rs.next()) {
+                response.append(String.format(
+                        template,
+                        (Object) args
+                ));
+
+                if (!rs.isLast()) {
+                    response.append(",");
+                }
+            }
+            response.append("]");
+        } catch (SQLException e) {
+            Main.logAll(Level.ERROR, e);
+        }
+        return response.toString();
     }
 }

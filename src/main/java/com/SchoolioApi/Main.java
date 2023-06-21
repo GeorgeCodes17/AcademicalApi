@@ -28,7 +28,7 @@ public class Main {
             response.type("application/json");
 
             String acceptHeader = request.headers("Accept");
-            if (acceptHeader == null || !(acceptHeader.equals("*/*") || acceptHeader.equals("application/json"))) {
+            if (request.requestMethod().equals("GET") && (acceptHeader == null || !(acceptHeader.equals("*/*") || acceptHeader.equals("application/json")))) {
                 response.status(HttpStatus.SC_NOT_ACCEPTABLE);
                 halt("Must accept application/json");
             }

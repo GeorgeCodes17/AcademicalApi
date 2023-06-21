@@ -31,14 +31,17 @@ public class JsonConverter {
         return jsonResult.toString();
     }
 
-    public String toJson (ResultSet rs, String template, String... args) {
+    public String toJson (ResultSet rs, String template) {
         StringBuilder response = new StringBuilder("[");
+
         try {
+            final int columnCount = rs.getMetaData().getColumnCount();
             while (rs.next()) {
-                response.append(String.format(
-                        template,
-                        (Object) args
-                ));
+                Object[] currentObject = new Object[columnCount];
+                for (int i = 1; i <= columnCount; ++i) {
+                    currentObject[i-1] = rs.getObject(i);
+                }
+                response.append(String.format(template, currentObject));
 
                 if (!rs.isLast()) {
                     response.append(",");

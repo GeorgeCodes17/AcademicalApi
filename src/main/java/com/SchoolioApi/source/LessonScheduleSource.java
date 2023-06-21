@@ -12,7 +12,8 @@ public class LessonScheduleSource {
     private final Connection con = DataSource.getConnection();
     private final JsonConverter jsonConverter = new JsonConverter();
 
-    private static final String LESSON_SCHEDULE_TEMPLATE = """
+    private static final String LESSON_SCHEDULE_TEMPLATE =
+    """
         {
             "id": %s,
             "assigned_by": "%s",
@@ -24,7 +25,7 @@ public class LessonScheduleSource {
                     "year": %s
                 }
             },
-            "day_of_week": "WED",
+            "day_of_week": "%s",
             "start": "%s",
             "end": "%s",
             "created_at": "%s",
@@ -39,11 +40,17 @@ public class LessonScheduleSource {
     public String index() throws SQLException {
         String qry = """
                     SELECT
-                        ls.*,
+                        ls.__pk,
+                        ls.assigned_by,
                         l.__pk,
                         l.name,
                         y.__pk,
-                        y.year
+                        y.year,
+                        ls.day_of_week,
+                        ls.start,
+                        ls.end,
+                        ls.created_at,
+                        ls.updated_at
                     FROM lesson_schedule as ls
                     INNER JOIN lesson as l ON ls._fk_lesson = l.__pk
                     INNER JOIN year as y ON l._fk_year = y.__pk
@@ -57,17 +64,7 @@ public class LessonScheduleSource {
 
         return jsonConverter.toJson(
                 rs,
-                LESSON_SCHEDULE_TEMPLATE,
-                rs.getString("ls.__pk"),
-                rs.getString("ls.assigned_by"),
-                rs.getString("l.__pk"),
-                rs.getString("l.name"),
-                rs.getString("y.__pk"),
-                rs.getString("y.year"),
-                rs.getString("ls.start"),
-                rs.getString("ls.end"),
-                rs.getString("ls.created_at"),
-                rs.getString("ls.updated_at")
+                LESSON_SCHEDULE_TEMPLATE
         );
     }
 

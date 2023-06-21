@@ -3,6 +3,7 @@ package com.SchoolioApi;
 import com.SchoolioApi.auth.AuthenticationFilter;
 import com.SchoolioApi.controllers.*;
 import com.SchoolioApi.helpers.ConfigFile;
+import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,6 +24,15 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        before((request, response) -> {
+            response.type("application/json");
+
+            String acceptHeader = request.headers("Accept");
+            if (acceptHeader == null || !(acceptHeader.equals("*/*") || acceptHeader.equals("application/json"))) {
+                response.status(HttpStatus.SC_NOT_ACCEPTABLE);
+                halt("Must accept application/json");
+            }
+        });
         before("/secured/*", new AuthenticationFilter());
 
         path("/secured", () -> {

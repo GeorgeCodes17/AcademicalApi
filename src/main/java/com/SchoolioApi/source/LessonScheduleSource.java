@@ -45,7 +45,7 @@ public class LessonScheduleSource {
                         l.__pk,
                         l.name,
                         y.__pk,
-                        y.year,
+                        y.name,
                         ls.day_of_week,
                         ls.start,
                         ls.end,

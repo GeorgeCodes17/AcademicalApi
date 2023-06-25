@@ -18,7 +18,7 @@ public class LessonSource {
                   'name', l.name,
                   'year', JSON_OBJECT(
                     'id', y.__pk,
-                    'year', y.year
+                    'name', y.name
                   ),
                   'created_at', l.created_at,
                   'updated_at', l.updated_at,

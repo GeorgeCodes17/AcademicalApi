@@ -1,7 +1,7 @@
-package com.SchoolioApi.controllers;
+package com.AcademicalApi.controllers;
 
-import com.SchoolioApi.Main;
-import com.SchoolioApi.exceptions.GetBearerException;
+import com.AcademicalApi.Main;
+import com.AcademicalApi.exceptions.GetBearerException;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.util.EntityUtils;
@@ -13,7 +13,7 @@ import spark.Route;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import static com.SchoolioApi.okta.TokenOkta.getToken;
+import static com.AcademicalApi.okta.TokenOkta.getToken;
 
 public class BearerByRefresh implements Route {
     @Override

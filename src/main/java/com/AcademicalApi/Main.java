@@ -1,8 +1,8 @@
-package com.SchoolioApi;
+package com.AcademicalApi;
 
-import com.SchoolioApi.auth.AuthenticationFilter;
-import com.SchoolioApi.controllers.*;
-import com.SchoolioApi.helpers.ConfigFile;
+import com.AcademicalApi.auth.AuthenticationFilter;
+import com.AcademicalApi.controllers.*;
+import com.AcademicalApi.helpers.ConfigFile;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

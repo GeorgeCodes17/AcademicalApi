@@ -1,7 +1,7 @@
-package com.SchoolioApi.okta;
+package com.AcademicalApi.okta;
 
-import com.SchoolioApi.Main;
-import com.SchoolioApi.objects.Account;
+import com.AcademicalApi.Main;
+import com.AcademicalApi.objects.Account;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import static com.SchoolioApi.helpers.ConfigFile.config;
+import static com.AcademicalApi.helpers.ConfigFile.config;
 
 public class TokenOkta {
     private static final Properties config = config();

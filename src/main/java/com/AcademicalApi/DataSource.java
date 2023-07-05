@@ -1,6 +1,6 @@
-package com.SchoolioApi;
+package com.AcademicalApi;
 
-import com.SchoolioApi.helpers.ConfigFile;
+import com.AcademicalApi.helpers.ConfigFile;
 import org.apache.logging.log4j.Level;
 
 import java.sql.Connection;

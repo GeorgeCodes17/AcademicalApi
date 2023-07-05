@@ -1,12 +1,12 @@
-package com.SchoolioApi.controllers;
+package com.AcademicalApi.controllers;
 
-import com.SchoolioApi.Main;
-import com.SchoolioApi.exceptions.RegisterUserException;
-import com.SchoolioApi.helpers.JsonConverter;
-import com.SchoolioApi.helpers.UrlEncodedConverter;
-import com.SchoolioApi.okta.RegisterOkta;
-import com.SchoolioApi.okta.TokenOkta;
-import com.SchoolioApi.objects.Account;
+import com.AcademicalApi.Main;
+import com.AcademicalApi.exceptions.RegisterUserException;
+import com.AcademicalApi.helpers.JsonConverter;
+import com.AcademicalApi.helpers.UrlEncodedConverter;
+import com.AcademicalApi.okta.RegisterOkta;
+import com.AcademicalApi.okta.TokenOkta;
+import com.AcademicalApi.objects.Account;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.util.EntityUtils;

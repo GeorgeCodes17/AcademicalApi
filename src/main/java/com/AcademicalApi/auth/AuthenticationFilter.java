@@ -1,6 +1,6 @@
-package com.SchoolioApi.auth;
+package com.AcademicalApi.auth;
 
-import com.SchoolioApi.Main;
+import com.AcademicalApi.Main;
 import com.okta.jwt.AccessTokenVerifier;
 import com.okta.jwt.JwtVerificationException;
 import com.okta.jwt.JwtVerifiers;
@@ -12,7 +12,7 @@ import spark.Response;
 
 import java.util.List;
 
-import static com.SchoolioApi.helpers.ConfigFile.config;
+import static com.AcademicalApi.helpers.ConfigFile.config;
 import static spark.Spark.halt;
 
 public class AuthenticationFilter implements Filter {

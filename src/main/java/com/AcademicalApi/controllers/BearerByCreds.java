@@ -1,9 +1,9 @@
-package com.SchoolioApi.controllers;
+package com.AcademicalApi.controllers;
 
-import com.SchoolioApi.Main;
-import com.SchoolioApi.exceptions.GetBearerException;
-import com.SchoolioApi.helpers.UrlEncodedConverter;
-import com.SchoolioApi.objects.Account;
+import com.AcademicalApi.Main;
+import com.AcademicalApi.exceptions.GetBearerException;
+import com.AcademicalApi.helpers.UrlEncodedConverter;
+import com.AcademicalApi.objects.Account;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.util.EntityUtils;
@@ -15,7 +15,7 @@ import spark.Route;
 import java.io.IOException;
 import java.util.Map;
 
-import static com.SchoolioApi.okta.TokenOkta.getToken;
+import static com.AcademicalApi.okta.TokenOkta.getToken;
 
 public class BearerByCreds implements Route {
     private final UrlEncodedConverter urlEncodedConverter = new UrlEncodedConverter();

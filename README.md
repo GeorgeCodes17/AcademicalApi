@@ -1,4 +1,4 @@
-# SchoolioApi
+# AcademicalApi
 
 ### Description
 This is the backend API for a school management software meant for teachers & school administrators. It has many endpoints & handles all the data + queries needed

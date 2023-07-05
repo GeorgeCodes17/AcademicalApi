@@ -1,6 +1,6 @@
-package com.SchoolioApi.source;
+package com.AcademicalApi.source;
 
-import com.SchoolioApi.DataSource;
+import com.AcademicalApi.DataSource;
 
 import java.sql.*;
 

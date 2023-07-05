@@ -1,9 +1,9 @@
-package com.SchoolioApi.controllers;
+package com.AcademicalApi.controllers;
 
-import com.SchoolioApi.Main;
-import com.SchoolioApi.exceptions.LessonScheduleException;
-import com.SchoolioApi.helpers.JsonConverter;
-import com.SchoolioApi.source.LessonScheduleSource;
+import com.AcademicalApi.Main;
+import com.AcademicalApi.exceptions.LessonScheduleException;
+import com.AcademicalApi.helpers.JsonConverter;
+import com.AcademicalApi.source.LessonScheduleSource;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.Level;
 import spark.Request;

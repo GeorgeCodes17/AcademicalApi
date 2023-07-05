@@ -1,6 +1,6 @@
-package com.SchoolioApi.helpers;
+package com.AcademicalApi.helpers;
 
-import com.SchoolioApi.Main;
+import com.AcademicalApi.Main;
 import org.apache.logging.log4j.Level;
 
 import java.io.FileInputStream;

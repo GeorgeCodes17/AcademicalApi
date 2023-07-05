@@ -1,8 +1,8 @@
-package com.SchoolioApi.source;
+package com.AcademicalApi.source;
 
-import com.SchoolioApi.DataSource;
-import com.SchoolioApi.controllers.LessonSchedule;
-import com.SchoolioApi.helpers.JsonConverter;
+import com.AcademicalApi.DataSource;
+import com.AcademicalApi.controllers.LessonSchedule;
+import com.AcademicalApi.helpers.JsonConverter;
 
 import java.sql.*;
 import java.util.HashMap;

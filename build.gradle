@@ -3,7 +3,7 @@ plugins {
 }
 
 application {
-    mainClass.set("com.SchoolioApi.Main")
+    mainClass.set("com.AcademicalApi.Main")
 }
 
 dependencies {

@@ -1,4 +1,4 @@
-package com.SchoolioApi.exceptions;
+package com.AcademicalApi.exceptions;
 
 public class LessonScheduleException extends Exception {
     public LessonScheduleException(String message) {

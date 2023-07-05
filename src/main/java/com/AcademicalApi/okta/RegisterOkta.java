@@ -1,6 +1,6 @@
-package com.SchoolioApi.okta;
+package com.AcademicalApi.okta;
 
-import com.SchoolioApi.objects.Account;
+import com.AcademicalApi.objects.Account;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -10,7 +10,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import java.io.IOException;
 import java.util.Properties;
 
-import static com.SchoolioApi.helpers.ConfigFile.config;
+import static com.AcademicalApi.helpers.ConfigFile.config;
 
 
 public class RegisterOkta {

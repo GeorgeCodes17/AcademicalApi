@@ -1,6 +1,6 @@
-package com.SchoolioApi.helpers;
+package com.AcademicalApi.helpers;
 
-import com.SchoolioApi.Main;
+import com.AcademicalApi.Main;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.Level;
 

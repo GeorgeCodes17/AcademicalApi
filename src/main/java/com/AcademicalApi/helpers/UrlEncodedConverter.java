@@ -1,4 +1,4 @@
-package com.SchoolioApi.helpers;
+package com.AcademicalApi.helpers;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;

@@ -1,9 +1,9 @@
-package com.SchoolioApi.controllers;
+package com.AcademicalApi.controllers;
 
-import com.SchoolioApi.Main;
-import com.SchoolioApi.exceptions.YearException;
-import com.SchoolioApi.helpers.JsonConverter;
-import com.SchoolioApi.source.YearSource;
+import com.AcademicalApi.Main;
+import com.AcademicalApi.exceptions.YearException;
+import com.AcademicalApi.helpers.JsonConverter;
+import com.AcademicalApi.source.YearSource;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.Level;
 import spark.Request;

@@ -16,8 +16,9 @@ This is the backend API for a school management software meant for teachers & sc
 ### Installation
 1. Navigate to root of project
 2. Run `gradle build` to install dependencies
-3. Request all the secrets needed for the `config.properties` file from me (not giving out to public)
-4. Run `gradle run` to run the api
+3. Update line below the "TODO Add your own script..." with a command that will start up mysql server, put the login credentials in the config.properties
+4. Request all the secrets needed for the `config.properties` file from me (not giving out to public)
+5. Run `gradle run` to run the api
 
 ### Naming Convention
 Variables

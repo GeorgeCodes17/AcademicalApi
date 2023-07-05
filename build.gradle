@@ -27,3 +27,8 @@ repositories {
         name 'Clojars'
     }
 }
+
+tasks.register('startupDatabase') {
+    // TODO Add your own script that starts mysql
+    commandLine 'mysql.server start'
+}

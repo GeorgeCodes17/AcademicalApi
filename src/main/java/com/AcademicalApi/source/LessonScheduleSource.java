@@ -74,10 +74,12 @@ public class LessonScheduleSource {
                 sub,
                 assigned_by,
                 _fk_lesson,
+                week_option,
                 day_of_week,
                 start,
                 end
             ) VALUES (
+                ?,
                 ?,
                 ?,
                 ?,
@@ -89,17 +91,19 @@ public class LessonScheduleSource {
 
         String assignedBy = params.get(LessonSchedule.queryParams[0]);
         int fkLesson = Integer.parseInt(params.get(LessonSchedule.queryParams[1]));
-        String dayOfWeek = params.get(LessonSchedule.queryParams[2]);
-        Time start = Time.valueOf(params.get(LessonSchedule.queryParams[3]));
-        Time end = Time.valueOf(params.get(LessonSchedule.queryParams[4]));
+        String weekOption = params.get(LessonSchedule.queryParams[2]);
+        String dayOfWeek = params.get(LessonSchedule.queryParams[3]);
+        Time start = Time.valueOf(params.get(LessonSchedule.queryParams[4]));
+        Time end = Time.valueOf(params.get(LessonSchedule.queryParams[5]));
 
         PreparedStatement stmt = con.prepareStatement(qry);
         stmt.setString(1, sub);
         stmt.setString(2, assignedBy);
         stmt.setInt(3, fkLesson);
-        stmt.setString(4, dayOfWeek);
-        stmt.setTime(5, start);
-        stmt.setTime(6, end);
+        stmt.setString(4, weekOption);
+        stmt.setString(5, dayOfWeek);
+        stmt.setTime(6, start);
+        stmt.setTime(7, end);
 
         stmt.execute();
     }

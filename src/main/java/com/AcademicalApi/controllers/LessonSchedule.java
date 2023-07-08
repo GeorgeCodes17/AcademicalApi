@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class LessonSchedule {
     private static final JsonConverter jsonConverter = new JsonConverter();
-    public static final String[] queryParams = {"assigned_by", "lesson", "day_of_week", "start", "end"};
+    public static final String[] queryParams = {"assigned_by", "lesson", "week_option", "day_of_week", "start", "end"};
 
     public static String index(Request request, Response response) {
         if (request.headers("SubId") == null || request.headers("SubId").isEmpty()) {
@@ -44,7 +44,7 @@ public class LessonSchedule {
             }
             params.put(param, request.queryParams(param));
         }
-
+        System.out.println(params);
         try {
             LessonScheduleSource lessonScheduleSource = new LessonScheduleSource(request.headers("SubId"));
             lessonScheduleSource.store(request.headers("SubId"), params);

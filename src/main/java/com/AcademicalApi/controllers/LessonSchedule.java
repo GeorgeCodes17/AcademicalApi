@@ -44,7 +44,7 @@ public class LessonSchedule {
             }
             params.put(param, request.queryParams(param));
         }
-        System.out.println(params);
+
         try {
             LessonScheduleSource lessonScheduleSource = new LessonScheduleSource(request.headers("SubId"));
             lessonScheduleSource.store(request.headers("SubId"), params);

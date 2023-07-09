@@ -22,7 +22,7 @@ public class LessonScheduleSource {
                 "name": "%s",
                 "year": {
                     "id": %s,
-                    "year": %s
+                    "name": %s
                 }
             },
             "day_of_week": "%s",

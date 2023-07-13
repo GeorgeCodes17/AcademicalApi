@@ -54,7 +54,12 @@ public class LessonScheduleSource {
                     FROM lesson_schedule as ls
                     INNER JOIN lesson as l ON ls._fk_lesson = l.__pk
                     INNER JOIN year as y ON l._fk_year = y.__pk
-                    WHERE sub = ?
+                    JOIN lesson_schedule_year_link as ll on ls.__pk = ll._fk_lesson_schedule
+                    JOIN school_year_dates as sy on sy.__pk = ll._fk_school_year_dates
+                    WHERE
+                    sub = ? AND
+                    CURDATE() > sy.first_day AND
+                    CURDATE() < sy.last_day
                     ORDER BY ls.start
                 """;
 

@@ -5,6 +5,7 @@ import com.AcademicalApi.controllers.LessonSchedule;
 import com.AcademicalApi.helpers.JsonConverter;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class LessonScheduleSource {
@@ -73,7 +74,7 @@ public class LessonScheduleSource {
         );
     }
 
-    public void store(String sub, HashMap<String, String> params) throws SQLException {
+    public void store(String sub, HashMap<String, String> params) throws SQLException, ParseException {
         String qry = """
             INSERT INTO lesson_schedule (
                 sub,
@@ -94,12 +95,12 @@ public class LessonScheduleSource {
             )
         """;
 
-        String assignedBy = params.get(LessonSchedule.queryParams[0]);
-        int fkLesson = Integer.parseInt(params.get(LessonSchedule.queryParams[1]));
-        String weekOption = params.get(LessonSchedule.queryParams[2]);
-        String dayOfWeek = params.get(LessonSchedule.queryParams[3]);
-        Time start = Time.valueOf(params.get(LessonSchedule.queryParams[4]));
-        Time end = Time.valueOf(params.get(LessonSchedule.queryParams[5]));
+        String assignedBy = params.get(LessonSchedule.REQUIRED_QUERY_PARAMS[0]);
+        int fkLesson = Integer.parseInt(params.get(LessonSchedule.REQUIRED_QUERY_PARAMS[1]));
+        String weekOption = params.get(LessonSchedule.REQUIRED_QUERY_PARAMS[2]);
+        String dayOfWeek = params.get(LessonSchedule.REQUIRED_QUERY_PARAMS[3]);
+        Time start = Time.valueOf(params.get(LessonSchedule.REQUIRED_QUERY_PARAMS[4]));
+        Time end = Time.valueOf(params.get(LessonSchedule.REQUIRED_QUERY_PARAMS[5]));
 
         PreparedStatement stmt = con.prepareStatement(qry);
         stmt.setString(1, sub);
@@ -109,7 +110,6 @@ public class LessonScheduleSource {
         stmt.setString(5, dayOfWeek);
         stmt.setTime(6, start);
         stmt.setTime(7, end);
-
         stmt.execute();
     }
 }

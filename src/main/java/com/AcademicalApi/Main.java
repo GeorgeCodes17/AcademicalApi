@@ -45,6 +45,7 @@ public class Main {
         post("/get-bearer-by-creds", new BearerByCreds());
         post("/get-bearer-by-refresh", new BearerByRefresh());
         post("/register", new Register());
+        get("/school-year-dates", SchoolYearDates::index);
     }
 
     public static void logAll(Level level, Exception message) {

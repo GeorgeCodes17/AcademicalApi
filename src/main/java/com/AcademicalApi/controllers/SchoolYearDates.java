@@ -10,9 +10,11 @@ import spark.Response;
 import java.sql.SQLException;
 
 public class SchoolYearDates {
+    private static final SchoolYearDatesSource SCHOOL_YEAR_DATES_SOURCE = new SchoolYearDatesSource();
+
     public static String index(Request request, Response response) {
         try {
-            return new SchoolYearDatesSource().index();
+            return SCHOOL_YEAR_DATES_SOURCE.index();
         } catch (SQLException e) {
             Main.logAll(Level.ERROR, e);
             response.status(HttpStatus.SC_NOT_FOUND);

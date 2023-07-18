@@ -10,15 +10,16 @@ public class SchoolYearDatesSource {
 
     public String index() throws SQLException {
         String qry = """
-            SELECT JSON_ARRAYAGG(
-              JSON_OBJECT(
-                  'id', __pk,
-                  'year', school_year,
-                  'first_day', first_day,
-                  'last_day', last_day
-              )
-          ) FROM school_year_dates
-            WHERE school_year = year(CURDATE())
+            SELECT
+            JSON_OBJECT(
+                'id', __pk,
+                'year', school_year,
+                'first_day', first_day,
+                'last_day', last_day
+            )
+            FROM school_year_dates
+            WHERE CURDATE() > first_day AND CURDATE() < last_day
+            LIMIT 1
         """;
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(qry);

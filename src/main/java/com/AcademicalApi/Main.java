@@ -46,6 +46,7 @@ public class Main {
         post("/get-bearer-by-refresh", new BearerByRefresh());
         post("/register", new Register());
         get("/school-year-dates", SchoolYearDates::index);
+        get("/week-option", WeekOption::index);
     }
 
     public static void logAll(Level level, Exception message) {

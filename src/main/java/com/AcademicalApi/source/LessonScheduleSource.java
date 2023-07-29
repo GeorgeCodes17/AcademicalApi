@@ -26,6 +26,7 @@ public class LessonScheduleSource {
                     "name": %s
                 }
             },
+            "week_option": "%s",
             "day_of_week": "%s",
             "start": "%s",
             "end": "%s",
@@ -47,6 +48,7 @@ public class LessonScheduleSource {
                         l.name,
                         y.__pk,
                         y.name,
+                        ls.week_option,
                         ls.day_of_week,
                         ls.start,
                         ls.end,

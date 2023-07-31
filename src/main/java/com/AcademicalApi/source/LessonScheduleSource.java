@@ -60,9 +60,9 @@ public class LessonScheduleSource {
                     JOIN lesson_schedule_year_link as ll on ls.__pk = ll._fk_lesson_schedule
                     JOIN school_year_dates as sy on sy.__pk = ll._fk_school_year_dates
                     WHERE
-                    sub = ? AND
-                    CURDATE() > sy.first_day AND
-                    CURDATE() < sy.last_day
+                        sub = ? AND
+                        CURDATE() > sy.first_day AND
+                        CURDATE() < sy.last_day
                     ORDER BY ls.start
                 """;
 
